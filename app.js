@@ -12,7 +12,7 @@ const path         = require('path');
 
 
 mongoose
-  .connect('mongodb://localhost/backriskpro', {useNewUrlParser: true})
+  .connect(process.env.DB, {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -54,6 +54,11 @@ app.locals.title = 'Express - Generated with IronGenerator';
 
 const index = require('./routes/index');
 app.use('/', index);
+
+//Para que cualquier ruta que no sea back la va a manejar React.
+app.all("/*", (req,res)=>{
+  res.sendFile(`${__dirname}/public/index.html`)
+})
 
 
 module.exports = app;
