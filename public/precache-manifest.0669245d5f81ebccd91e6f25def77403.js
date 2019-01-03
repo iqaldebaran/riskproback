@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/static/media/card-3.498dde0d.jpeg"
   },
   {
-    "revision": "97d474b17e532190ced6",
+    "revision": "826be818c1e063b3676c",
     "url": "/static/css/main.d726849e.chunk.css"
   },
   {
@@ -24,8 +24,8 @@ self.__precacheManifest = [
     "url": "/static/media/card-2.498dde0d.jpeg"
   },
   {
-    "revision": "97d474b17e532190ced6",
-    "url": "/static/js/main.97d474b1.chunk.js"
+    "revision": "826be818c1e063b3676c",
+    "url": "/static/js/main.826be818.chunk.js"
   },
   {
     "revision": "498dde0dddea4640f86abcebd7baa016",
@@ -48,7 +48,7 @@ self.__precacheManifest = [
     "url": "/static/css/1.d3f69dce.chunk.css"
   },
   {
-    "revision": "9a82a31f77951c2e200c651a901e94c1",
+    "revision": "564234bf6a514acc67fa52e734403f08",
     "url": "/index.html"
   }
 ];
