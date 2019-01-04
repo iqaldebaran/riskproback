@@ -31,13 +31,13 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 const app = express();
 
 //Prueba correccion en heroku cors - No funciono
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", '*');
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-  next();
-});
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", '*');
+//   res.header("Access-Control-Allow-Credentials", true);
+//   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+//   res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+//   next();
+// });
 
 // Middleware Setup
 app.use(logger('dev'));
@@ -63,7 +63,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use(cors({
-  origin:[process.env.CORSHEROKU]
+  origin:["http://localhost:3002"]
 }));
 
 
@@ -76,15 +76,17 @@ app.locals.title = 'Express - Generated with IronGenerator';
 // const index = require('./routes');
 // app.use('/', index);
 
-//Para que cualquier ruta que no sea back la va a manejar React.
-// app.all("/*", (req,res)=>{
-//   res.sendFile(`${__dirname}/public/index.html`)
-// })
+
 
 
 // Passport config
 require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
+
+// Para que cualquier ruta que no sea back la va a manejar React.
+app.all("/*", (req,res)=>{
+  res.sendFile(`${__dirname}/public/index.html`)
+})
 
 module.exports = app;
