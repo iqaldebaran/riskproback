@@ -32,7 +32,7 @@ router.post("/register", (req, res) => {
 
     if(req.body.password !== req.body.confirmPassword) return res.status(500).json({msg: "Las cotraseñas no coinciden"});
 
-    const salt = bcrypt.genSaltSync(256);
+    const salt = bcrypt.genSaltSync(128);
     const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
     User.create({

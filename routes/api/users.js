@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
@@ -80,7 +82,8 @@ router.post("/login", (req, res) => {
         // Create JWT Payload
         const payload = {
           id: user.id,
-          name: user.name
+          name: user.name,
+          email: user.email,
         };
 
         // Sign token
@@ -88,7 +91,7 @@ router.post("/login", (req, res) => {
           payload,
           keys.secretOrKey,
           {
-            expiresIn: 31556926 // 1 year in seconds
+            expiresIn: 31556926 //jwt Expires 1 year in seconds
           },
           (err, token) => {
             res.json({
@@ -111,14 +114,18 @@ router.post("/login", (req, res) => {
 // @access Private
 router.get(
   "/currentuser",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }), //TODO:Verificar autenticacion, no funciona
   (req, res) => {
-    res.json({
-      id: req.user.id,
-      name: req.user.name,
-      email: req.user.email
-    });
-  }
-);
+    User.findOne({user:req.body.email})
+    .then(user=>res.json(user))
+    .catch(err=>console.log("errorson"))
+
+    // res.json({
+    //   id: req.user.id,
+    //   name: "req.user.name",
+    //   email: "req.user.email"
+    // });
+    
+  });
 
 module.exports = router;
