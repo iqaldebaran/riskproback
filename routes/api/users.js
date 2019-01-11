@@ -6,6 +6,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
+const auth = require('../auth.js')
+
+const requireToken = auth.authenticateJWT;
+
 
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
@@ -55,6 +59,7 @@ router.post("/register", (req, res) => {
 // @route POST api/users/login
 // @desc Login user and return JWT token
 // @access Public
+
 router.post("/login", (req, res) => {
   // Form validation
 
@@ -94,6 +99,7 @@ router.post("/login", (req, res) => {
             expiresIn: 31556926 //jwt Expires 1 year in seconds
           },
           (err, token) => {
+            // console.log("token:",token)
             res.json({
               success: true,
               token: "Bearer " + token
@@ -109,6 +115,21 @@ router.post("/login", (req, res) => {
   });
 });
 
+
+// router.get("/currentuser", (req, res) => { 
+
+//     User.findOne({ name: "achis" }).then(user => {
+//       console.log(user.email)
+//       res.json({
+//         name: user.name,
+//         email: user.email
+//       })
+//     })
+  
+
+//   // res.json({message: "Success! You can not see this without a token"})
+// });
+
 // @route GET api/users/currentuser
 // @desc Return current user
 // @access Private
@@ -116,15 +137,15 @@ router.get(
   "/currentuser",
   passport.authenticate("jwt", { session: false }), //TODO:Verificar autenticacion, no funciona
   (req, res) => {
-    User.findOne({user:req.body.email})
-    .then(user=>res.json(user))
-    .catch(err=>console.log("errorson"))
+    // User.findOne({user:req.body.email})
+    // .then(user=>res.json(user))
+    // .catch(err=>console.log("errorson"))
 
-    // res.json({
-    //   id: req.user.id,
-    //   name: "req.user.name",
-    //   email: "req.user.email"
-    // });
+    res.json({
+      id: req.user.id,
+      name: "req.user.name",
+      email: "req.user.email"
+    });
     
   });
 
