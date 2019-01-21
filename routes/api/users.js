@@ -18,6 +18,11 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
 
+//Carga tabla de sustancias
+const Data = require('../../models/Data')
+
+//console.log("Data: ",User.findOne({name:"achis"}))
+
 // @route POST api/users/register
 // @desc Register user
 // @access Public
@@ -116,19 +121,20 @@ router.post("/login", (req, res) => {
 });
 
 
-// router.get("/currentuser", (req, res) => { 
+router.get("/data", (req, res) => { 
 
-//     User.findOne({ name: "achis" }).then(user => {
-//       console.log(user.email)
-//       res.json({
-//         name: user.name,
-//         email: user.email
-//       })
-//     })
+    Data.find().then(data => {
+      // console.log(data)
+      res.json({
+        name: data[7].name,
+        mw: data[7].mw,
+
+      })
+    })
   
 
-//   // res.json({message: "Success! You can not see this without a token"})
-// });
+  // res.json({message: "Success! You can not see this without a token"})
+});
 
 // @route GET api/users/currentuser
 // @desc Return current user
@@ -140,7 +146,7 @@ router.get(
     // User.findOne({user:req.body.email})
     // .then(user=>res.json(user))
     // .catch(err=>console.log("errorson"))
-
+console.log("Mando datos?",res)
     res.json({
       id: req.user.id,
       name: "req.user.name",
@@ -148,5 +154,7 @@ router.get(
     });
     
   });
+
+  
 
 module.exports = router;
